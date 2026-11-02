@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRIME SOUND — расписание студии</title>
+<meta name="theme-color" content="#07110d">
+<meta name="description" content="Расписание студии PRIME SOUND. Участники сами записываются на свободные часы.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230b1a13'/%3E%3Cg stroke='%237df0b3' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M20 26v12M32 18v28M44 24v16'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07110d;
+    --bg-soft:#0a1712;
+    --panel:rgba(17,34,26,.66);
+    --panel-solid:#10231b;
+    --line:rgba(158,255,206,.095);
+    --line-strong:rgba(158,255,206,.19);
+    --text:#e9f7ee;
+    --muted:#82a291;
+    --muted-2:#5f7d6c;
+    --accent:#7df0b3;
+    --accent-2:#31c488;
+    --accent-soft:rgba(125,240,179,.13);
+    --lime:#d9ff9e;
+    --danger:#ff8f8f;
+    --radius:18px;
+    --shadow:0 24px 60px -20px rgba(0,0,0,.75);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:15px;
+    line-height:1.45;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:
+      radial-gradient(900px 520px at 12% -8%,rgba(70,235,160,.13),transparent 62%),
+      radial-gradient(760px 460px at 88% -4%,rgba(26,120,88,.20),transparent 64%),
+      radial-gradient(1000px 700px at 50% 110%,rgba(20,80,58,.22),transparent 70%),
+      linear-gradient(180deg,#08140f 0%,#060f0b 100%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1320px;margin:0 auto;padding:0 22px}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    border-bottom:1px solid var(--line);
+    background:rgba(7,17,13,.72);
+    backdrop-filter:blur(16px) saturate(120%);
+  }
+  .topbar-in{
+    display:flex;align-items:center;gap:18px;
+    padding:14px 0;min-width:0;
+  }
+  .brand{display:flex;align-items:center;gap:13px;min-width:0;flex:0 1 auto;overflow:hidden}
+  .logo{
+    width:44px;height:44px;flex:none;border-radius:13px;
+    background:linear-gradient(160deg,rgba(125,240,179,.20),rgba(49,196,136,.05));
+    border:1px solid var(--line-strong);
+    display:grid;place-items:center;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 8px 24px -12px rgba(125,240,179,.6);
+  }
+  .brand h1{
+    margin:0;font-size:19px;font-weight:600;letter-spacing:.30em;
+    text-transform:uppercase;line-height:1.1;
+    background:linear-gradient(90deg,#f2fff7,#a9f5cc 70%,#7df0b3);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    white-space:nowrap;
+  }
+  .brand .sub{
+    display:block;margin-top:4px;font-family:"JetBrains Mono",monospace;
+    font-size:9.5px;letter-spacing:.34em;color:var(--muted-2);text-transform:uppercase;
+  }
+  .top-spacer{flex:1;min-width:0}
+  .top-right{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;justify-content:flex-end;min-width:0}
+  .status{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:11px;color:var(--muted);letter-spacing:.08em;
+    font-family:"JetBrains Mono",monospace;text-transform:uppercase;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(125,240,179,.12)}
+  .dot.off{background:#d8a24a;box-shadow:0 0 0 4px rgba(216,162,74,.12)}
+  .dot.pulse{animation:pulse 2.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    appearance:none;border:1px solid var(--line-strong);
+    background:rgba(255,255,255,.025);color:var(--text);
+    font:inherit;font-size:13px;font-weight:600;
+    padding:9px 14px;border-radius:11px;cursor:pointer;
+    transition:.16s ease;white-space:nowrap;
+  }
+  .btn:hover{background:rgba(125,240,179,.10);border-color:rgba(125,240,179,.35);transform:translateY(-1px)}
+  .btn:active{transform:none}
+  .btn.ghost{background:transparent;border-color:var(--line)}
+  .btn.primary{
+    background:linear-gradient(160deg,#8bf3bd,#37c98d);
+    color:#052015;border-color:transparent;
+    box-shadow:0 10px 26px -12px rgba(80,235,170,.65);
+  }
+  .btn.primary:hover{filter:brightness(1.05);background:linear-gradient(160deg,#9bffcb,#3ddc9b)}
+  .btn.icon{width:38px;height:38px;padding:0;display:grid;place-items:center;font-size:17px;line-height:1}
+  .btn.danger{color:var(--danger);border-color:rgba(255,143,143,.3);background:rgba(255,143,143,.06)}
+  .btn.danger:hover{background:rgba(255,143,143,.12);border-color:rgba(255,143,143,.5)}
+  .btn:disabled{opacity:.45;cursor:default;transform:none}
+
+  .me-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 12px 7px 8px;border-radius:999px;
+    border:1px solid var(--line-strong);background:rgba(255,255,255,.03);
+    font:inherit;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;transition:.16s;
+    max-width:200px;min-width:0;
+  }
+  .me-btn > span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .me-btn:hover{border-color:rgba(125,240,179,.4);background:rgba(125,240,179,.07)}
+  .me-avatar{
+    width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+    background:linear-gradient(160deg,rgba(125,240,179,.3),rgba(49,196,136,.12));
+    border:1px solid rgba(125,240,179,.28);
+    font-size:11px;font-weight:700;color:#c9ffe3;text-transform:uppercase;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:30px 0 6px}
+  .hero-top{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap}
+  .eyebrow{
+    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--muted-2);
+  }
+  .week-title{
+    margin:7px 0 0;font-size:clamp(26px,3.4vw,40px);font-weight:300;letter-spacing:-.02em;line-height:1.1;
+  }
+  .week-title strong{font-weight:700;color:#fff}
+  .week-title .year{color:var(--muted-2);font-weight:400;font-size:.62em;letter-spacing:.06em;margin-left:8px}
+  .hero-actions{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .week-switch{display:flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:12px;padding:3px;background:rgba(255,255,255,.02)}
+  .week-switch .btn{border:0;background:transparent;padding:6px 11px;border-radius:9px}
+  .week-switch .btn:hover{background:rgba(125,240,179,.10);transform:none}
+
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin:18px 0 14px;color:var(--muted);font-size:11.5px}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .sw{width:18px;height:11px;border-radius:4px;border:1px solid var(--line-strong);background:rgba(255,255,255,.03)}
+  .sw.busy{background:linear-gradient(150deg,rgba(125,240,179,.25),rgba(49,196,136,.08));border-color:rgba(125,240,179,.4)}
+  .sw.mine{background:linear-gradient(150deg,rgba(217,255,158,.32),rgba(125,240,179,.10));border-color:rgba(217,255,158,.6)}
+  .sw.past{background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 3px,transparent 3px 6px)}
+
+  /* ---------- board ---------- */
+  .board{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:linear-gradient(180deg,rgba(18,36,28,.55),rgba(9,20,15,.72));
+    box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.05);
+    overflow:hidden;
+  }
+  .board-scroll{overflow-x:auto;scrollbar-color:rgba(125,240,179,.3) transparent}
+  .board-scroll::-webkit-scrollbar{height:9px}
+  .board-scroll::-webkit-scrollbar-thumb{background:rgba(125,240,179,.22);border-radius:9px}
+  .grid{
+    display:grid;
+    grid-template-columns:74px repeat(7,minmax(118px,1fr));
+    min-width:900px;
+  }
+  .gh{
+    padding:13px 12px 12px;border-left:1px solid var(--line);
+    border-bottom:1px solid var(--line-strong);
+    background:rgba(255,255,255,.018);
+    display:flex;flex-direction:column;gap:3px;min-width:0;
+    position:relative;
+  }
+  .gh:first-child{border-left:0}
+  .gh .wd{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.22em;color:var(--muted-2)}
+  .gh .d{font-size:19px;font-weight:600;letter-spacing:-.01em;line-height:1.1}
+  .gh .m{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:var(--muted-2);letter-spacing:.1em}
+  .gh.weekend{background:rgba(255,255,255,.032)}
+  .gh.today{
+    background:linear-gradient(180deg,rgba(125,240,179,.14),rgba(125,240,179,.02));
+  }
+  .gh.today .wd{color:var(--accent)}
+  .gh.today::after{
+    content:"";position:absolute;left:12px;right:12px;bottom:0;height:2px;
+    background:linear-gradient(90deg,var(--accent),transparent);
+  }
+  .gh.corner{background:transparent;border-bottom:1px solid var(--line-strong)}
+
+  .hour{
+    display:flex;justify-content:flex-end;align-items:flex-start;
+    padding:7px 10px 0 0;
+    font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--muted-2);
+    border-top:1px solid var(--line);
+    background:rgba(255,255,255,.012);
+    min-height:58px;
+  }
+  .cell{
+    position:relative;min-height:58px;padding:4px;
+    border-top:1px solid var(--line);border-left:1px solid var(--line);
+    display:flex;flex-direction:column;gap:4px;
+    cursor:pointer;transition:background .14s ease;
+  }
+  .cell .plus{
+    position:absolute;inset:0;display:grid;place-items:center;
+    color:var(--accent);font-size:18px;font-weight:300;opacity:0;transition:.14s;pointer-events:none;
+  }
+  .cell.empty:hover{background:rgba(125,240,179,.055)}
+  .cell.empty:hover .plus{opacity:.8}
+  .cell.empty:hover .cell-inner{opacity:.15}
+  .cell-inner{height:100%;display:flex;flex-direction:column;gap:4px;transition:opacity .14s;pointer-events:none}
+  .cell.past-day{background:rgba(0,0,0,.12)}
+  .cell.past-day .entry{opacity:.62}
+  .cell.today-col{background:rgba(125,240,179,.028)}
+
+  .entry{
+    text-align:left;border:1px solid rgba(125,240,179,.30);
+    background:linear-gradient(150deg,rgba(125,240,179,.20),rgba(49,196,136,.055));
+    color:#dcffee;border-radius:10px;padding:6px 8px 6px 9px;
+    display:flex;flex-direction:column;gap:1px;min-width:0;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+    position:relative;overflow:hidden;
+  }
+  .entry::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
+    background:linear-gradient(180deg,var(--accent),rgba(125,240,179,.1));
+  }
+  .entry .n{font-size:12.5px;font-weight:700;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .entry .t{font-family:"JetBrains Mono",monospace;font-size:9.5px;color:rgba(210,255,232,.62);letter-spacing:.02em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .entry.mine{
+    border-color:rgba(217,255,158,.55);
+    background:linear-gradient(150deg,rgba(217,255,158,.24),rgba(125,240,179,.08));
+    color:#f2ffd9;
+  }
+  .entry.mine::before{background:linear-gradient(180deg,var(--lime),rgba(217,255,158,.15))}
+  .entry.mine .t{color:rgba(242,255,217,.65)}
+  .entry.past{opacity:.6}
+
+  /* ---------- section / my list ---------- */
+  .below{display:grid;grid-template-columns:1.35fr .65fr;gap:18px;margin:18px 0 40px}
+  .card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:linear-gradient(180deg,rgba(18,36,28,.5),rgba(9,20,15,.62));
+    padding:18px 20px;
+  }
+  .card h2{
+    margin:0 0 14px;font-size:11px;font-weight:600;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px;
+  }
+  .card h2::after{content:"";flex:1;height:1px;background:var(--line)}
+  .mylist{display:flex;flex-direction:column;gap:6px;max-height:250px;overflow:auto}
+  .myrow{
+    display:flex;align-items:center;gap:12px;padding:9px 11px;border-radius:11px;
+    border:1px solid transparent;background:rgba(255,255,255,.022);cursor:pointer;transition:.14s;
+  }
+  .myrow:hover{border-color:rgba(125,240,179,.28);background:rgba(125,240,179,.06)}
+  .myrow .date{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--accent);min-width:82px}
+  .myrow .nm{font-weight:600;font-size:13px}
+  .myrow .nt{margin-left:auto;font-size:11.5px;color:var(--muted)}
+  .empty-note{color:var(--muted-2);font-size:13px;padding:6px 2px}
+
+  .how{display:flex;flex-direction:column;gap:10px;font-size:12.5px;color:var(--muted)}
+  .how b{color:var(--text);font-weight:600}
+  .how .step{display:flex;gap:11px}
+  .how .num{
+    width:22px;height:22px;border-radius:50%;flex:none;display:grid;place-items:center;
+    border:1px solid var(--line-strong);font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--accent);
+  }
+  .share{display:flex;gap:8px;margin-top:14px}
+  .share input{
+    flex:1;min-width:0;background:rgba(0,0,0,.25);border:1px solid var(--line);
+    border-radius:10px;color:var(--muted);font:11px "JetBrains Mono",monospace;padding:9px 10px;
+  }
+
+  footer{
+    border-top:1px solid var(--line);padding:20px 0 30px;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    color:var(--muted-2);font-size:11px;letter-spacing:.1em;
+    font-family:"JetBrains Mono",monospace;text-transform:uppercase;
+  }
+
+  /* ---------- dialog ---------- */
+  dialog{
+    border:0;padding:0;background:transparent;color:var(--text);
+    width:min(460px,calc(100vw - 28px));max-height:calc(100vh - 40px);
+  }
+  dialog::backdrop{background:rgba(2,8,5,.66);backdrop-filter:blur(6px)}
+  .dlg{
+    border:1px solid var(--line-strong);border-radius:20px;
+    background:linear-gradient(170deg,#14291f,#0b1812);
+    box-shadow:0 40px 100px -30px #000,inset 0 1px 0 rgba(255,255,255,.07);
+    padding:22px 22px 20px;
+  }
+  .dlg-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+  .dlg-eyebrow{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase}
+  .dlg h2{margin:5px 0 0;font-size:24px;font-weight:600;letter-spacing:-.01em}
+  .dlg-x{
+    margin-left:auto;width:32px;height:32px;border-radius:9px;border:1px solid var(--line);
+    background:rgba(255,255,255,.03);color:var(--muted);font-size:17px;cursor:pointer;line-height:1;
+  }
+  .dlg-x:hover{color:var(--text);border-color:var(--line-strong)}
+  .busy{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .busy-row{
+    display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;
+    background:rgba(125,240,179,.07);border:1px solid rgba(125,240,179,.18);font-size:13px;
+  }
+  .busy-row .nm{font-weight:700}
+  .busy-row .nt{color:var(--muted);font-size:11.5px}
+  .busy-row .del{
+    margin-left:auto;border:0;background:transparent;color:var(--danger);cursor:pointer;
+    font-size:15px;padding:2px 4px;border-radius:6px;
+  }
+  .busy-row .del:hover{background:rgba(255,143,143,.12)}
+  .busy-row.is-mine{background:rgba(217,255,158,.10);border-color:rgba(217,255,158,.32)}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+  .field label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .field label span{text-transform:none;letter-spacing:0;color:var(--muted-2);font-weight:400}
+  .field input{
+    width:100%;background:rgba(0,0,0,.28);border:1px solid var(--line);
+    border-radius:11px;padding:11px 12px;color:var(--text);font:inherit;font-size:14px;outline:none;transition:.15s;
+  }
+  .field input:focus{border-color:rgba(125,240,179,.55);box-shadow:0 0 0 3px rgba(125,240,179,.12)}
+  .field input::placeholder{color:#4f6a59}
+  .dlg-actions{display:flex;gap:9px;margin-top:16px}
+  .dlg-actions .primary{flex:1}
+  .hint{font-size:11px;color:var(--muted-2);margin-top:10px;line-height:1.5}
+
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);
+    background:#10241b;border:1px solid rgba(125,240,179,.4);color:#dcffee;
+    padding:11px 18px;border-radius:12px;font-size:13px;font-weight:600;
+    box-shadow:0 20px 50px -18px #000;opacity:0;pointer-events:none;transition:.25s;z-index:60;
+  }
+  .toast.on{opacity:1;transform:translate(-50%,0)}
+  .toast.err{border-color:rgba(255,143,143,.5);color:#ffd7d7}
+
+  /* ---------- mobile day view ---------- */
+  .mobile-day{display:none}
+  .mday-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .mday-nav{
+    width:34px;height:38px;flex:none;border-radius:10px;border:1px solid var(--line);
+    background:rgba(255,255,255,.03);color:var(--muted);font-size:16px;cursor:pointer;line-height:1;
+  }
+  .mday-nav:hover{color:var(--text);border-color:var(--line-strong)}
+  .mday-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;flex:1}
+  .mday-chip{
+    border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:10px;
+    padding:6px 0 5px;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;
+    align-items:center;gap:1px;font:inherit;line-height:1.15;min-width:0;
+  }
+  .mday-chip .wd{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.08em;color:var(--muted-2)}
+  .mday-chip .dd{font-size:13px;font-weight:700;color:var(--text)}
+  .mday-chip.active{
+    border-color:rgba(125,240,179,.55);
+    background:linear-gradient(160deg,rgba(125,240,179,.24),rgba(49,196,136,.08));
+  }
+  .mday-chip.active .wd,.mday-chip.active .dd{color:#d9ffe9}
+  .mday-chip.today .dd{color:var(--accent)}
+  .mday-chip.past{opacity:.6}
+
+  .mday-head{display:flex;align-items:flex-end;gap:10px;margin:2px 0 12px}
+  .mday-title{font-size:20px;font-weight:600;letter-spacing:-.01em}
+  .mday-count{
+    margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:10px;
+    letter-spacing:.1em;color:var(--muted-2);text-transform:uppercase;
+  }
+  .mday-rows{
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:linear-gradient(180deg,rgba(18,36,28,.5),rgba(9,20,15,.62));
+  }
+  .mrow{display:flex;gap:8px;padding:4px 6px 4px 0;border-top:1px solid var(--line)}
+  .mrow:first-child{border-top:0}
+  .mrow.past{opacity:.6}
+  .mtime{
+    width:46px;flex:none;text-align:right;padding-top:9px;
+    font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--muted-2);
+  }
+  .mslot{
+    flex:1;min-height:48px;border-radius:10px;border:1px solid transparent;
+    padding:4px;display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:.14s;
+    position:relative;
+  }
+  .mslot.empty{border:1px dashed rgba(158,255,206,.13);background:rgba(255,255,255,.015)}
+  .mslot.empty::after{
+    content:"свободно";position:absolute;left:12px;top:50%;transform:translateY(-50%);
+    font-size:11px;color:var(--muted-2);opacity:0;transition:.14s;
+  }
+  .mslot.empty::before{
+    content:"+";position:absolute;right:12px;top:50%;transform:translateY(-50%);
+    font-size:16px;color:var(--accent);opacity:0;transition:.14s;
+  }
+  .mslot.empty:active,.mslot.empty:hover{background:rgba(125,240,179,.07);border-color:rgba(125,240,179,.3)}
+  .mslot.empty:active::after,.mslot.empty:active::before,
+  .mslot.empty:hover::after,.mslot.empty:hover::before{opacity:1}
+  .mslot .entry{width:100%}
+
+  @media (max-width:860px){
+    .board{display:none}
+    .mobile-day{display:block;margin-bottom:18px}
+    .mslot{min-height:44px}
+    .mslot .entry{padding:9px 10px}
+    .mslot.empty::after{opacity:.5}
+    .mslot.empty::before{opacity:.65}
+  }
+
+  @media (max-width:900px){
+    .wrap{padding:0 14px}
+    .brand h1{font-size:16px;letter-spacing:.22em}
+    .brand .sub{font-size:8px;letter-spacing:.24em}
+    .topbar-in{gap:10px;padding:11px 0}
+    .status span{display:none}
+    .hero{padding:20px 0 2px}
+    .hero-actions{width:100%;margin-left:0;justify-content:space-between}
+    .below{grid-template-columns:1fr}
+    .board-scroll{margin:0 -14px;padding:0 14px;border-radius:0}
+    .board{border-radius:14px}
+    .top-right .btn.share-btn{display:none}
+    .legend{gap:12px;font-size:10.5px}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M4 9v6M9.3 5.5v13M14.7 8v8M20 10.5v3" stroke="#7df0b3" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Prime Sound</h1>
+        <span class="sub">studio · schedule</span>
+      </div>
+    </div>
+    <div class="top-spacer"></div>
+    <div class="top-right">
+      <div class="status"><span class="dot pulse" id="liveDot"></span><span id="liveText">онлайн</span></div>
+      <button class="btn ghost share-btn" id="btnShare">Поделиться</button>
+      <button class="me-btn" id="btnMe">
+        <span class="me-avatar" id="meAvatar">?</span>
+        <span id="meName">Я не представился</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="eyebrow" id="weekEyebrow">неделя</div>
+        <h2 class="week-title" id="weekTitle"></h2>
+      </div>
+      <div class="hero-actions">
+        <div class="week-switch">
+          <button class="btn" id="prevWeek" title="Предыдущая неделя">‹</button>
+          <button class="btn" id="toggleToday" title="К текущей неделе">Сегодня</button>
+          <button class="btn" id="nextWeek" title="Следующая неделя">›</button>
+        </div>
+        <button class="btn primary" id="btnAdd">+ Записаться</button>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i class="sw"></i> свободно</span>
+      <span><i class="sw busy"></i> занято</span>
+      <span><i class="sw mine"></i> твоя запись</span>
+      <span><i class="sw past"></i> прошло</span>
+    </div>
+  </section>
+
+  <section class="board">
+    <div class="board-scroll">
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="mobile-day" id="mobileDay"></section>
+
+  <section class="below">
+    <div class="card">
+      <h2>Мои записи</h2>
+      <div class="mylist" id="myList"></div>
+    </div>
+    <div class="card">
+      <h2>Как это работает</h2>
+      <div class="how">
+        <div class="step"><span class="num">1</span><div>Нажми на свободную клетку в расписании.</div></div>
+        <div class="step"><span class="num">2</span><div>Впиши <b>имя</b> — оно запомнится на этом устройстве.</div></div>
+        <div class="step"><span class="num">3</span><div>Запись сразу увидят все, у кого есть ссылка.</div></div>
+      </div>
+      <div class="share">
+        <input id="shareInput" readonly>
+        <button class="btn" id="btnCopy">Копировать</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Prime Sound · studio schedule</span>
+    <span id="footUpdated">—</span>
+  </footer>
+</main>
+
+<dialog id="slotDialog">
+  <div class="dlg">
+    <div class="dlg-head">
+      <div>
+        <div class="dlg-eyebrow" id="dDay">—</div>
+        <h2 id="dHour">—</h2>
+      </div>
+      <button class="dlg-x" id="dClose" aria-label="Закрыть">×</button>
+    </div>
+    <div class="busy" id="dBusy"></div>
+    <form id="dForm" autocomplete="off">
+      <div class="field">
+        <label for="fName">Имя <span>· обязательно</span></label>
+        <input id="fName" maxlength="30" placeholder="Как тебя зовут" required>
+      </div>
+      <div class="field">
+        <label for="fNote">Комментарий <span>· необязательно</span></label>
+        <input id="fNote" maxlength="48" placeholder="например, вокал / до 17:30">
+      </div>
+      <div class="dlg-actions">
+        <button type="button" class="btn ghost" id="dCancel">Отмена</button>
+        <button type="submit" class="btn primary" id="dSave">Записаться</button>
+      </div>
+    </form>
+    <div class="hint">Свою запись можно удалить. Старые записи из Excel тоже удаляются — кнопкой × с подтверждением.</div>
+  </div>
+</dialog>
+
+<dialog id="nameDialog">
+  <div class="dlg">
+    <div class="dlg-head">
+      <div>
+        <div class="dlg-eyebrow">представься</div>
+        <h2>Как тебя зовут?</h2>
+      </div>
+      <button class="dlg-x" id="nClose" aria-label="Закрыть">×</button>
+    </div>
+    <form id="nForm" autocomplete="off">
+      <div class="field">
+        <label for="nInput">Имя</label>
+        <input id="nInput" maxlength="30" placeholder="Имя" required>
+      </div>
+      <div class="dlg-actions">
+        <button type="button" class="btn ghost" id="nCancel">Отмена</button>
+        <button type="submit" class="btn primary">Сохранить</button>
+      </div>
+      <div class="hint">Имя видно другим участникам в расписании. Хранится только в этом браузере.</div>
+    </form>
+  </div>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  const API = location.hostname.endsWith("github.io")
+    ? "https://prime-sound-studio.netlify.app/api/schedule"
+    : "/api/schedule";
+  const LS_NAME = "prime_sound_name";
+  const LS_MINE = "prime_sound_mine";
+  const LS_LOCAL = "prime_sound_local_data";
+
+  const WD = ["воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"];
+  const WD_SHORT = ["ВС","ПН","ВТ","СР","ЧТ","ПТ","СБ"];
+  const MONTHS = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+  const MONTHS_SHORT = ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"];
+  const HOURS = Array.from({length:15},(_,i)=>i+8);
+
+  const state = {
+    entries: [],
+    week: null,
+    mday: null,
+    me: localStorage.getItem(LS_NAME) || "",
+    mine: new Set(JSON.parse(localStorage.getItem(LS_MINE) || "[]")),
+    mode: "server",
+    updated: 0,
+    busy: false,
+  };
+
+  const $ = (id)=>document.getElementById(id);
+
+  /* ---------- dates ---------- */
+  function iso(d){
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+    return y+"-"+m+"-"+day;
+  }
+  function fromISO(s){
+    const p = s.split("-").map(Number);
+    return new Date(p[0], p[1]-1, p[2]);
+  }
+  function addDays(d,n){
+    const x = new Date(d.getFullYear(),d.getMonth(),d.getDate());
+    x.setDate(x.getDate()+n);
+    return x;
+  }
+  function mondayOf(d){
+    const x = new Date(d.getFullYear(),d.getMonth(),d.getDate());
+    const shift = (x.getDay()+6)%7;
+    return addDays(x,-shift);
+  }
+  function sameDay(a,b){ return iso(a)===iso(b); }
+
+  /* ---------- data ---------- */
+  function saveLocal(){
+    localStorage.setItem(LS_LOCAL, JSON.stringify({version:1,updated:Date.now(),entries:state.entries}));
+  }
+  function readLocal(){
+    try{
+      const raw = JSON.parse(localStorage.getItem(LS_LOCAL) || "null");
+      if(raw && Array.isArray(raw.entries)) return raw;
+    }catch(e){}
+    return null;
+  }
+  function loadDemoSeed(){
+    return new Promise((resolve)=>{
+      if(window.PRIME_SEED){ return resolve(); }
+      const s = document.createElement("script");
+      s.src = "demo-seed.js";
+      s.onload = ()=>resolve();
+      s.onerror = ()=>resolve();
+      document.head.appendChild(s);
+    });
+  }
+
+  async function load(){
+    try{
+      const r = await fetch(API, {cache:"no-store"});
+      if(!r.ok) throw new Error("api");
+      const j = await r.json();
+      if(!Array.isArray(j.entries)) throw new Error("bad");
+      state.entries = j.entries;
+      state.updated = j.updated || 0;
+      state.mode = "server";
+      setLive(true);
+    }catch(e){
+      state.mode = "local";
+      setLive(false);
+      if(!readLocal() && !window.PRIME_SEED){
+        await loadDemoSeed();
+      }
+      const local = readLocal();
+      if(local){ state.entries = local.entries; state.updated = local.updated || 0; }
+      else if(window.PRIME_SEED){
+        state.entries = window.PRIME_SEED.map(e=>({...e}));
+        state.updated = 0;
+      }
+    }
+    render();
+  }
+
+  function setLive(on){
+    const dot = $("liveDot"), txt = $("liveText");
+    dot.classList.toggle("off", !on);
+    dot.classList.toggle("pulse", on);
+    txt.textContent = on ? "онлайн" : "локально";
+    dot.title = on ? "Данные синхронизируются со всеми" : "Нет связи с сервером: изменения видны только здесь";
+  }
+
+  async function post(payload){
+    if(state.mode === "local"){
+      applyLocal(payload);
+      saveLocal();
+      return;
+    }
+    const r = await fetch(API, {
+      method:"POST",
+      // text/plain — чтобы не было CORS preflight при обращении к API на другом домене
+      headers:{"Content-Type":"text/plain;charset=UTF-8"},
+      body:JSON.stringify(payload)
+    });
+    if(!r.ok) throw new Error("save");
+    const j = await r.json();
+    if(Array.isArray(j.entries)) state.entries = j.entries;
+    state.updated = j.updated || Date.now();
+  }
+
+  function applyLocal(p){
+    if(p.action === "add"){
+      state.entries.push({id:p.id,date:p.date,hour:p.hour,name:p.name,note:p.note||"",created:Date.now()});
+    }else if(p.action === "remove"){
+      state.entries = state.entries.filter(e=>e.id!==p.id);
+    }
+    state.updated = Date.now();
+  }
+
+  /* ---------- render ---------- */
+  function entryFor(date,hour){
+    return state.entries.filter(e=>e.date===date && e.hour===hour);
+  }
+
+  function render(){
+    if(!state.week) state.week = mondayOf(new Date());
+    renderHeading();
+    renderGrid();
+    renderMobileDay();
+    renderMine();
+    renderMe();
+    const d = state.updated ? new Date(state.updated) : null;
+    $("footUpdated").textContent = d
+      ? "обновлено " + d.toLocaleString("ru-RU",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})
+      : (state.mode==="local" ? "локальный режим" : "—");
+  }
+
+  function renderHeading(){
+    const a = state.week, b = addDays(a,6);
+    const sameMonth = a.getMonth()===b.getMonth();
+    const eyebrow = a.getFullYear()===b.getFullYear() ? String(a.getFullYear()) : a.getFullYear()+" / "+b.getFullYear();
+    $("weekEyebrow").textContent = "неделя · " + eyebrow;
+    const title = sameMonth
+      ? `${a.getDate()} — ${b.getDate()} ${MONTHS[b.getMonth()]}`
+      : `${a.getDate()} ${MONTHS[a.getMonth()]} — ${b.getDate()} ${MONTHS[b.getMonth()]}`;
+    $("weekTitle").innerHTML = `<strong>${title}</strong><span class="year">${b.getFullYear()}</span>`;
+  }
+
+  function renderGrid(){
+    const today = new Date();
+    const grid = $("grid");
+    grid.innerHTML = "";
+
+    const corner = document.createElement("div");
+    corner.className = "gh corner";
+    grid.appendChild(corner);
+
+    for(let i=0;i<7;i++){
+      const d = addDays(state.week,i);
+      const h = document.createElement("div");
+      h.className = "gh";
+      if([0,6].includes(d.getDay())) h.classList.add("weekend");
+      if(sameDay(d,today)) h.classList.add("today");
+      const wd = document.createElement("div"); wd.className="wd"; wd.textContent = WD_SHORT[d.getDay()];
+      const dd = document.createElement("div"); dd.className="d"; dd.textContent = String(d.getDate()).padStart(2,"0");
+      const mm = document.createElement("div"); mm.className="m"; mm.textContent = MONTHS_SHORT[d.getMonth()];
+      h.append(wd,dd,mm);
+      grid.appendChild(h);
+    }
+
+    HOURS.forEach(hour=>{
+      const hc = document.createElement("div");
+      hc.className = "hour";
+      hc.textContent = String(hour).padStart(2,"0")+":00";
+      grid.appendChild(hc);
+
+      for(let i=0;i<7;i++){
+        const d = addDays(state.week,i);
+        const date = iso(d);
+        const list = entryFor(date,hour);
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.dataset.date = date;
+        cell.dataset.hour = String(hour);
+
+        const past = d < new Date(today.getFullYear(),today.getMonth(),today.getDate());
+        if(past) cell.classList.add("past-day");
+        if(sameDay(d,today)) cell.classList.add("today-col");
+        if(!list.length) cell.classList.add("empty");
+
+        const inner = document.createElement("div");
+        inner.className = "cell-inner";
+        list.forEach(e=>{
+          const card = document.createElement("div");
+          card.className = "entry";
+          if(state.mine.has(e.id)) card.classList.add("mine");
+          if(past) card.classList.add("past");
+          const n = document.createElement("span"); n.className="n"; n.textContent = e.name;
+          card.appendChild(n);
+          if(e.note){
+            const t = document.createElement("span"); t.className="t"; t.textContent = e.note;
+            card.appendChild(t);
+          }
+          inner.appendChild(card);
+        });
+        const plus = document.createElement("span");
+        plus.className = "plus"; plus.textContent = "+";
+
+        cell.append(inner, plus);
+        cell.addEventListener("click", ()=>openSlot(date,hour));
+        grid.appendChild(cell);
+      }
+    });
+  }
+
+  function pickMobileDay(){
+    const today = new Date();
+    for(let i=0;i<7;i++){
+      if(iso(addDays(state.week,i))===iso(today)) return iso(today);
+    }
+    return iso(state.week);
+  }
+
+  function renderMobileDay(){
+    const box = $("mobileDay");
+    box.innerHTML = "";
+    if(!state.week) return;
+
+    if(state.mday && (state.mday < iso(state.week) || state.mday > iso(addDays(state.week,6)))){
+      state.mday = null;
+    }
+    if(!state.mday) state.mday = pickMobileDay();
+
+    const day = fromISO(state.mday);
+    const today = new Date();
+    const todayStart = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+
+    const bar = document.createElement("div");
+    bar.className = "mday-bar";
+
+    const prev = document.createElement("button");
+    prev.className = "mday-nav"; prev.type = "button"; prev.title = "Предыдущий день"; prev.textContent = "‹";
+    prev.addEventListener("click", ()=>shiftMobileDay(-1));
+
+    const next = document.createElement("button");
+    next.className = "mday-nav"; next.type = "button"; next.title = "Следующий день"; next.textContent = "›";
+    next.addEventListener("click", ()=>shiftMobileDay(1));
+
+    const days = document.createElement("div");
+    days.className = "mday-days";
+    for(let i=0;i<7;i++){
+      const d = addDays(state.week,i);
+      const ds = iso(d);
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "mday-chip";
+      if(ds === state.mday) chip.classList.add("active");
+      if(sameDay(d,today)) chip.classList.add("today");
+      if(d < todayStart) chip.classList.add("past");
+      const wd = document.createElement("span"); wd.className="wd"; wd.textContent = WD_SHORT[d.getDay()];
+      const dd = document.createElement("span"); dd.className="dd"; dd.textContent = String(d.getDate()).padStart(2,"0");
+      chip.append(wd,dd);
+      chip.addEventListener("click", ()=>{ state.mday = ds; renderMobileDay(); });
+      days.appendChild(chip);
+    }
+    bar.append(prev, days, next);
+
+    const head = document.createElement("div");
+    head.className = "mday-head";
+    const title = document.createElement("div");
+    title.className = "mday-title";
+    const wdName = WD[day.getDay()];
+    title.textContent = wdName.charAt(0).toUpperCase()+wdName.slice(1)+", "+day.getDate()+" "+MONTHS[day.getMonth()];
+    const count = document.createElement("div");
+    count.className = "mday-count";
+    const total = state.entries.filter(e=>e.date===state.mday).length;
+    count.textContent = total ? total+" зап." : "свободно";
+    head.append(title,count);
+
+    const rows = document.createElement("div");
+    rows.className = "mday-rows";
+    const isPastDay = day < todayStart;
+
+    HOURS.forEach(hour=>{
+      const list = entryFor(state.mday, hour);
+      const row = document.createElement("div");
+      row.className = "mrow";
+      if(isPastDay) row.classList.add("past");
+
+      const time = document.createElement("div");
+      time.className = "mtime";
+      time.textContent = String(hour).padStart(2,"0")+":00";
+
+      const slot = document.createElement("div");
+      slot.className = "mslot" + (list.length ? "" : " empty");
+      list.forEach(e=>{
+        const card = document.createElement("div");
+        card.className = "entry" + (state.mine.has(e.id) ? " mine" : "");
+        const n = document.createElement("span"); n.className="n"; n.textContent = e.name;
+        card.appendChild(n);
+        if(e.note){
+          const t = document.createElement("span"); t.className="t"; t.textContent = e.note;
+          card.appendChild(t);
+        }
+        slot.appendChild(card);
+      });
+      slot.addEventListener("click", ()=>openSlot(state.mday, hour));
+
+      row.append(time, slot);
+      rows.appendChild(row);
+    });
+
+    box.append(bar, head, rows);
+  }
+
+  function shiftMobileDay(delta){
+    const d = addDays(fromISO(state.mday), delta);
+    state.mday = iso(d);
+    if(d < state.week || d > addDays(state.week,6)) state.week = mondayOf(d);
+    render();
+  }
+
+  function renderMine(){
+    const box = $("myList");
+    box.innerHTML = "";
+    const mine = state.entries
+      .filter(e=>state.mine.has(e.id))
+      .sort((a,b)=> (a.date+a.hour).localeCompare(b.date+b.hour));
+    if(!mine.length){
+      const p = document.createElement("div");
+      p.className = "empty-note";
+      p.textContent = "Пока пусто. Нажми на свободную клетку — и запиши себя.";
+      box.appendChild(p);
+      return;
+    }
+    mine.forEach(e=>{
+      const d = fromISO(e.date);
+      const row = document.createElement("div");
+      row.className = "myrow";
+      const date = document.createElement("span"); date.className="date";
+      date.textContent = WD_SHORT[d.getDay()]+" "+String(d.getDate()).padStart(2,"0")+"."+String(d.getMonth()+1).padStart(2,"0");
+      const nm = document.createElement("span"); nm.className="nm"; nm.textContent = e.name;
+      const nt = document.createElement("span"); nt.className="nt";
+      nt.textContent = String(e.hour).padStart(2,"0")+":00"+(e.note ? " · "+e.note : "");
+      row.append(date,nm,nt);
+      row.addEventListener("click",()=>openSlot(e.date,e.hour));
+      box.appendChild(row);
+    });
+  }
+
+  function renderMe(){
+    $("meName").textContent = state.me || "Я не представился";
+    $("meAvatar").textContent = state.me ? state.me.trim().charAt(0) : "?";
+  }
+
+  /* ---------- dialogs ---------- */
+  let current = null;
+
+  function openSlot(date,hour){
+    current = {date,hour};
+    const d = fromISO(date);
+    $("dDay").textContent = WD[d.getDay()] + " · " + d.getDate() + " " + MONTHS[d.getMonth()];
+    $("dHour").textContent = String(hour).padStart(2,"0")+":00";
+    $("fName").value = state.me || "";
+    $("fNote").value = "";
+    renderBusy();
+    $("slotDialog").showModal();
+    setTimeout(()=>{ $("fName").focus(); $("fName").select(); }, 30);
+  }
+
+  function isSeedEntry(e){
+    return !e.created;
+  }
+
+  function renderBusy(){
+    const box = $("dBusy");
+    box.innerHTML = "";
+    const list = entryFor(current.date, current.hour);
+    list.forEach(e=>{
+      const row = document.createElement("div");
+      row.className = "busy-row";
+      const mine = state.mine.has(e.id);
+      const seed = isSeedEntry(e);
+      if(mine) row.classList.add("is-mine");
+      const nm = document.createElement("span"); nm.className="nm"; nm.textContent = e.name;
+      row.appendChild(nm);
+      if(e.note){
+        const nt = document.createElement("span"); nt.className="nt"; nt.textContent = e.note;
+        row.appendChild(nt);
+      }
+      if(mine || seed){
+        const del = document.createElement("button");
+        del.className = "del"; del.type="button";
+        del.title = mine ? "Удалить мою запись" : "Удалить запись из Excel";
+        del.textContent="×";
+        del.addEventListener("click", async ()=>{
+          if(seed && !mine){
+            const ok = window.confirm("Удалить запись «"+e.name+"» ("+String(current.hour).padStart(2,"0")+":00) из расписания? Это увидят все.");
+            if(!ok) return;
+          }
+          del.disabled = true;
+          try{
+            await post({action:"remove", id:e.id});
+            state.mine.delete(e.id);
+            persistMine();
+            render(); renderBusy();
+            toast("Запись удалена");
+            if(!entryFor(current.date,current.hour).length) closeSlot();
+          }catch(err){
+            del.disabled = false;
+            toast("Не получилось удалить", true);
+          }
+        });
+        row.appendChild(del);
+      }
+      box.appendChild(row);
+    });
+  }
+
+  function closeSlot(){ $("slotDialog").close(); }
+
+  $("dForm").addEventListener("submit", async (ev)=>{
+    ev.preventDefault();
+    if(state.busy) return;
+    const name = $("fName").value.trim().replace(/\s+/g," ");
+    const note = $("fNote").value.trim().replace(/\s+/g," ");
+    if(!name){ $("fName").focus(); return; }
+    state.busy = true;
+    $("dSave").disabled = true;
+    try{
+      const id = (crypto.randomUUID ? crypto.randomUUID() : "e"+Date.now()+"-"+Math.random().toString(16).slice(2));
+      await post({action:"add", id, date:current.date, hour:current.hour, name, note});
+      state.me = name;
+      localStorage.setItem(LS_NAME, name);
+      state.mine.add(id);
+      persistMine();
+      toast("Готово — ты в расписании");
+      closeSlot();
+      render();
+    }catch(e){
+      toast("Не получилось сохранить. Попробуй ещё раз", true);
+    }finally{
+      state.busy = false;
+      $("dSave").disabled = false;
+    }
+  });
+
+  $("dClose").addEventListener("click", closeSlot);
+  $("dCancel").addEventListener("click", closeSlot);
+  $("slotDialog").addEventListener("click", (e)=>{ if(e.target === $("slotDialog")) closeSlot(); });
+
+  $("btnMe").addEventListener("click", ()=>{
+    $("nInput").value = state.me || "";
+    $("nameDialog").showModal();
+    setTimeout(()=>$("nInput").focus(),30);
+  });
+  $("nClose").addEventListener("click", ()=>$("nameDialog").close());
+  $("nCancel").addEventListener("click", ()=>$("nameDialog").close());
+  $("nForm").addEventListener("submit",(ev)=>{
+    ev.preventDefault();
+    const v = $("nInput").value.trim().replace(/\s+/g," ");
+    if(!v) return;
+    state.me = v;
+    localStorage.setItem(LS_NAME,v);
+    $("nameDialog").close();
+    renderMe();
+    toast("Запомнил: "+v);
+  });
+
+  $("btnAdd").addEventListener("click", ()=>{
+    // ближайший свободный час: сегодня, если есть; иначе завтра 12:00
+    const now = new Date();
+    const today = iso(now);
+    for(const hour of HOURS){
+      if(hour < now.getHours() && today === iso(now)) continue;
+      if(!entryFor(today,hour).length){ openSlot(today,hour); return; }
+    }
+    openSlot(iso(addDays(now,1)),12);
+  });
+
+  $("prevWeek").addEventListener("click", ()=>{ state.week = addDays(state.week,-7); state.mday = null; render(); });
+  $("nextWeek").addEventListener("click", ()=>{ state.week = addDays(state.week,7); state.mday = null; render(); });
+  $("toggleToday").addEventListener("click", ()=>{
+    state.week = mondayOf(new Date());
+    state.mday = iso(new Date());
+    render();
+  });
+
+  /* ---------- share ---------- */
+  const url = location.href.split("#")[0];
+  $("shareInput").value = url;
+  $("btnCopy").addEventListener("click", async ()=>{
+    try{
+      await navigator.clipboard.writeText(url);
+      toast("Ссылка скопирована");
+    }catch(e){
+      $("shareInput").select();
+      document.execCommand("copy");
+      toast("Ссылка скопирована");
+    }
+  });
+  $("btnShare").addEventListener("click", async ()=>{
+    if(navigator.share){
+      try{ await navigator.share({title:"PRIME SOUND — расписание", url}); }catch(e){}
+    }else{
+      try{ await navigator.clipboard.writeText(url); toast("Ссылка скопирована"); }catch(e){}
+    }
+  });
+
+  /* ---------- toast ---------- */
+  let toastTimer = null;
+  function toast(msg, err){
+    const t = $("toast");
+    t.textContent = msg;
+    t.classList.toggle("err", !!err);
+    t.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>t.classList.remove("on"), 2600);
+  }
+
+  function persistMine(){
+    localStorage.setItem(LS_MINE, JSON.stringify([...state.mine]));
+  }
+
+  /* ---------- live ---------- */
+  let refreshTimer = null;
+  function scheduleRefresh(){
+    clearInterval(refreshTimer);
+    refreshTimer = setInterval(()=>{
+      if(document.hidden) return;
+      if($("slotDialog").open) return;
+      load();
+    }, 25000);
+  }
+  document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) load(); });
+
+  /* ---------- go ---------- */
+  state.week = mondayOf(new Date());
+  load().then(scheduleRefresh);
+})();
+</script>
+</body>
+</html>
